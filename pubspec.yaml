@@ -35,6 +35,10 @@ dependencies:
   cached_network_image: ^2.0.0-rc
 
 dev_dependencies:
+  json_serializable: ^3.2.5
+  json_annotation: ^3.0.1
+  build_runner: ^1.7.2
+
   flutter_test:
     sdk: flutter
 

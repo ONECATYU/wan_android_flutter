@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'bottom_tab_bar.dart';
+import '../components/bottom_tab_bar.dart';
 
 import 'package:wan_android_flutter/pages/home/home_page.dart';
 import 'package:wan_android_flutter/pages/cate/cate_page.dart';
@@ -57,7 +57,9 @@ class _RootPageState extends State<RootPage> {
         itemCount: barItemList.length,
         itemBuilder: (index) {
           _RootBarItemData itemData = barItemList[index];
-          Color color = selectedIndex == index ? Colors.red : Colors.grey;
+          Color color = selectedIndex == index
+              ? Theme.of(context).primaryColor
+              : Colors.grey;
           IconData iconData =
               IconData(itemData.codePoint, fontFamily: "iconfont");
           return BottomTabBarItem(

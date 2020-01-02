@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 const double kBottomTabBarHeight = 50;
 
-class BottomTabBar extends StatefulWidget {
+class BottomTabBar extends StatelessWidget {
   BottomTabBar({
     Key key,
     this.itemCount,
     this.itemBuilder,
     this.didSelected,
-    this.backgroundColor = Colors.white,
-    this.elevation = 1.0,
+    this.backgroundColor,
+    this.elevation = 0.0,
   }) : super(key: key);
 
   final int itemCount;
@@ -21,27 +21,20 @@ class BottomTabBar extends StatefulWidget {
   final double elevation;
 
   @override
-  State<StatefulWidget> createState() {
-    return _BottomTabBarState();
-  }
-}
-
-class _BottomTabBarState extends State<BottomTabBar> {
-  @override
   Widget build(BuildContext context) {
     List<Widget> items = [];
-    for (int i = 0; i < widget.itemCount; i++) {
+    for (int i = 0; i < itemCount; i++) {
       items.add(Expanded(
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
-          child: widget.itemBuilder(i),
-          onTap: () => widget.didSelected(i),
+          child: itemBuilder(i),
+          onTap: () => didSelected(i),
         ),
       ));
     }
     return Material(
-      elevation: widget.elevation,
-      color: widget.backgroundColor,
+      elevation: elevation,
+      color: backgroundColor ?? Theme.of(context).backgroundColor,
       child: SafeArea(
         child: Container(
           height: kBottomTabBarHeight,
