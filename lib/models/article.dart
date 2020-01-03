@@ -1,4 +1,4 @@
-class ArticleListModel {
+class ArticleModel {
   String apkLink;
   int audit;
   String author;
@@ -32,7 +32,7 @@ class ArticleListModel {
   /// 是否是置顶文章
   bool isTop = false;
 
-  ArticleListModel({
+  ArticleModel({
     this.apkLink,
     this.audit,
     this.author,
@@ -64,7 +64,7 @@ class ArticleListModel {
     this.zan,
   });
 
-  ArticleListModel.fromJson(Map<String, dynamic> json) {
+  ArticleModel.fromJson(Map<String, dynamic> json) {
     apkLink = json['apkLink'];
     audit = json['audit'];
     author = json['author'];

@@ -14,8 +14,8 @@ Future<Result> getArticleList({int page = 0}) async {
   if (!result.success) return result;
 
   List jsonList = result.data["data"]["datas"];
-  List<ArticleListModel> models = jsonList.map((json) {
-    return ArticleListModel.fromJson(json);
+  List<ArticleModel> models = jsonList.map((json) {
+    return ArticleModel.fromJson(json);
   }).toList();
   result.model = models;
   return result;
@@ -27,8 +27,8 @@ Future<Result> getTopArticleList() async {
   if (!result.success) return result;
 
   List jsonList = result.data["data"];
-  List<ArticleListModel> models = jsonList.map((json) {
-    return ArticleListModel.fromJson(json)..isTop = true;
+  List<ArticleModel> models = jsonList.map((json) {
+    return ArticleModel.fromJson(json)..isTop = true;
   }).toList();
   result.model = models;
   return result;

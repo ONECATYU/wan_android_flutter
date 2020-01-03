@@ -20,13 +20,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin {
   RefreshController _refreshController = RefreshController();
-  List<ArticleListModel> _articleList;
+  List<ArticleModel> _articleList;
   List<BannerModel> _bannerList;
   int _page = 1;
 
   onRefresh() async {
     _page = 1;
-    List<ArticleListModel> articleList = [];
+    List<ArticleModel> articleList = [];
     List<BannerModel> bannerList;
 
     List<Result> results = await Future.wait([
@@ -61,13 +61,13 @@ class _HomePageState extends State<HomePage>
       _page--;
       return;
     }
-    List<ArticleListModel> models = result.model as List<ArticleListModel>;
+    List<ArticleModel> models = result.model as List<ArticleModel>;
     if (models.length == 0) {
       _refreshController.loadNoData();
       return;
     }
     _refreshController.loadComplete();
-    List<ArticleListModel> articleList = [];
+    List<ArticleModel> articleList = [];
     articleList.addAll(_articleList);
     articleList.addAll(models);
     setState(() {
@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage>
     });
   }
 
-  collectHandler(ArticleListModel model) {
+  collectHandler(ArticleModel model) {
     if (model.collect || model.id == null) return;
   }
 
@@ -116,8 +116,9 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> children = [];
+    super.build(context);
 
+    List<Widget> children = [];
     if (_bannerList != null && _bannerList.length > 0) {
       children.add(_buildBanner());
       children.add(Padding(padding: EdgeInsets.only(bottom: 12)));
