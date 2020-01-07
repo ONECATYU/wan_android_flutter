@@ -3,8 +3,12 @@ import 'package:wan_android_flutter/pages/root_page.dart';
 import 'package:provider/provider.dart';
 
 import 'package:wan_android_flutter/provider/theme.dart';
+import 'package:wan_android_flutter/router/router.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  AppRouter.register();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -12,13 +16,13 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<ThemeManager>.value(
-          value: ThemeManager(themeData: AppTheme.normal),
+          value: ThemeManager(appTheme: AppLightTheme()),
         ),
       ],
       child: Consumer<ThemeManager>(builder: (context, themeManager, _) {
         return MaterialApp(
           title: 'Flutter Demo',
-          theme: themeManager.currentTheme,
+          theme: themeManager.themeData,
           home: RootPage(),
         );
       }),

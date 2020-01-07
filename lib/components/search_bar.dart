@@ -11,7 +11,7 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: backgroundColor ?? Theme.of(context).backgroundColor,
+      color: backgroundColor ?? Theme.of(context).scaffoldBackgroundColor,
       height: 40,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

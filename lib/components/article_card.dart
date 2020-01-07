@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:wan_android_flutter/models/article.dart';
 import 'package:wan_android_flutter/util/string_util.dart';
+import 'package:wan_android_flutter/util/iconfont.dart';
 
 class ArticleCard extends StatelessWidget {
   ArticleCard({
@@ -57,10 +58,7 @@ class ArticleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: backgroundColor ?? Theme.of(context).backgroundColor,
-      ),
+      color: backgroundColor ?? Theme.of(context).backgroundColor,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -140,7 +138,7 @@ class ArticleCard extends StatelessWidget {
         InkWell(
           onTap: collectClick,
           child: Icon(
-            IconData(isCollected ? 0xe60c : 0xe613, fontFamily: "iconfont"),
+            isCollected? IconFont.heartSolid : IconFont.heart,
             size: 20,
             color: Colors.red,
           ),

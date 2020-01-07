@@ -31,10 +31,10 @@ class TabBarScaffold extends StatelessWidget {
       );
     }
     return Scaffold(
-      appBar: SimpleAppBar(
-        backgroundColor: Theme.of(context).backgroundColor,
-        child: title,
-        bottom: tabBar,
+      appBar: AppBar(
+        centerTitle: true,
+        title: title ?? tabBar,
+        bottom: title != null ? tabBar : null,
       ),
       body: ListView.separated(
         padding: EdgeInsets.all(12),

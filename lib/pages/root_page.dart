@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wan_android_flutter/provider/theme.dart';
 import '../components/bottom_tab_bar.dart';
 
 import 'package:wan_android_flutter/pages/home/home_page.dart';
@@ -6,12 +8,13 @@ import 'package:wan_android_flutter/pages/cate/cate_page.dart';
 import 'package:wan_android_flutter/pages/public_plat/public_plat_page.dart';
 import 'package:wan_android_flutter/pages/project/project_page.dart';
 import 'package:wan_android_flutter/pages/user/user_page.dart';
+import 'package:wan_android_flutter/util/iconfont.dart';
 
 class _RootBarItemData {
-  int codePoint;
+  IconData icon;
   String title;
 
-  _RootBarItemData({this.codePoint, this.title});
+  _RootBarItemData({this.icon, this.title});
 }
 
 class RootPage extends StatefulWidget {
@@ -24,11 +27,11 @@ class RootPage extends StatefulWidget {
 class _RootPageState extends State<RootPage> {
   int selectedIndex = 0;
   List<_RootBarItemData> barItemList = [
-    _RootBarItemData(codePoint: 0xe608, title: "首页"),
-    _RootBarItemData(codePoint: 0xe604, title: "体系"),
-    _RootBarItemData(codePoint: 0xe664, title: "公众号"),
-    _RootBarItemData(codePoint: 0xe66c, title: "项目"),
-    _RootBarItemData(codePoint: 0xe60d, title: "我的"),
+    _RootBarItemData(icon: IconFont.home, title: "首页"),
+    _RootBarItemData(icon: IconFont.tree, title: "体系"),
+    _RootBarItemData(icon: IconFont.publicPlat, title: "公众号"),
+    _RootBarItemData(icon: IconFont.project, title: "项目"),
+    _RootBarItemData(icon: IconFont.user, title: "我的"),
   ];
   List<Widget> pages = [
     HomePage(),
@@ -60,10 +63,8 @@ class _RootPageState extends State<RootPage> {
           Color color = selectedIndex == index
               ? Theme.of(context).primaryColor
               : Colors.grey;
-          IconData iconData =
-              IconData(itemData.codePoint, fontFamily: "iconfont");
           return BottomTabBarItem(
-            icon: Icon(iconData, color: color),
+            icon: Icon(itemData.icon, color: color),
             title: Text(itemData.title, style: TextStyle(color: color)),
           );
         },

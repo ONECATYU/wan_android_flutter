@@ -95,21 +95,18 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget _buildBanner() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        height: 200,
-        child: Swiper.list(
-          autoplay: true,
-          list: _bannerList,
-          builder: (context, m, index) {
-            BannerModel model = m as BannerModel;
-            return CachedNetworkImage(
-              imageUrl: model.imagePath,
-              fit: BoxFit.cover,
-            );
-          },
-        ),
+    return Container(
+      height: 200,
+      child: Swiper.list(
+        autoplay: true,
+        list: _bannerList,
+        builder: (context, m, index) {
+          BannerModel model = m as BannerModel;
+          return CachedNetworkImage(
+            imageUrl: model.imagePath,
+            fit: BoxFit.cover,
+          );
+        },
       ),
     );
   }
@@ -136,11 +133,11 @@ class _HomePageState extends State<HomePage>
     }
 
     return Scaffold(
-      appBar: SimpleAppBar(
+      appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(6),
-          child: SearchBar(),
+        title: SearchBar(
+          backgroundColor: Theme.of(context).backgroundColor,
         ),
       ),
       body: SmartRefresher(

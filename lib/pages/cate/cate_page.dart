@@ -69,7 +69,7 @@ class _CatePageState extends State<CatePage>
         backgroundColor: themeData.backgroundColor,
         child: Center(
           child: SizedBox(
-            width: 140,
+            width: 160,
             child: TabBar(
               controller: _tabController,
               indicatorColor: themeData.primaryColor,
