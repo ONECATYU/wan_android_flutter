@@ -18,6 +18,7 @@ class ArticleCard extends StatelessWidget {
     this.isTop = false,
     this.isCollected = false,
     this.collectClick,
+    this.onTap,
   }) : super(key: key);
 
   final Color backgroundColor;
@@ -35,28 +36,31 @@ class ArticleCard extends StatelessWidget {
   final bool isCollected;
 
   final VoidCallback collectClick;
+  final VoidCallback onTap;
 
   factory ArticleCard.fromArticleListModel(
     ArticleModel model, {
     VoidCallback collectClick,
+    VoidCallback onTap,
   }) {
     return ArticleCard(
       title: model.title.trimHTML(),
       content: model.desc.trimHTML(),
-      author: model.author.isNotEmpty ? model.author : model.shareUser,
-      chapterName: model.chapterName + "·" + model.superChapterName,
-      isNew: model.fresh,
-      isTop: model.isTop,
+      author: model.author ?? model.shareUser,
+      chapterName: model.chapterName ?? "" + "·" + model.superChapterName ?? "",
+      isNew: model.fresh ?? false,
+      isTop: model.isTop ?? false,
       timeDesc: model.niceDate,
       isCollected: model.collect,
       collectClick: collectClick,
       imgUrl: model.envelopePic,
+      onTap: onTap,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    Widget widget = Container(
       padding: EdgeInsets.all(12),
       color: backgroundColor ?? Theme.of(context).backgroundColor,
       child: Column(
@@ -75,6 +79,13 @@ class ArticleCard extends StatelessWidget {
         ],
       ),
     );
+    if (onTap != null) {
+      widget = InkWell(
+        onTap: onTap,
+        child: widget,
+      );
+    }
+    return widget;
   }
 
   Widget _buildHeader(BuildContext context) {
@@ -135,10 +146,11 @@ class ArticleCard extends StatelessWidget {
             ],
           ),
         ),
+        if (isCollected != null) 
         InkWell(
           onTap: collectClick,
           child: Icon(
-            isCollected? IconFont.heartSolid : IconFont.heart,
+            isCollected ? IconFont.heartSolid : IconFont.heart,
             size: 20,
             color: Colors.red,
           ),

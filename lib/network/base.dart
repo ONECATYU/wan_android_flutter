@@ -1,4 +1,9 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:cookie_jar/cookie_jar.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 
 enum ResError { none, loginInvalid, dataFormatErr, server }
 
@@ -27,7 +32,23 @@ enum ReqMethod {
 
 class Client {
   static const host = "https://www.wanandroid.com";
-  static Dio dio = Dio();
+  static Dio dio;
+  static PersistCookieJar _cookieJar;
+
+  static Future<Dio> dioInstance() async {
+    if (dio == null) {
+      Directory tempDir = await getTemporaryDirectory();
+      String tempPath = tempDir.path;
+      _cookieJar = PersistCookieJar(dir: tempPath);
+      dio = Dio();
+      dio.interceptors.add(CookieManager(_cookieJar));
+    }
+    return dio;
+  }
+
+  static cleanAllCookies() {
+    if (_cookieJar != null) _cookieJar.deleteAll();
+  }
 
   static Future<Result> request(
     String path, {
@@ -37,6 +58,7 @@ class Client {
     if (!path.startsWith("http")) {
       path = host + path;
     }
+    Dio dio = await dioInstance();
     Response response;
     if (reqMethod == ReqMethod.GET) {
       response = await dio.get(path, queryParameters: parameters);

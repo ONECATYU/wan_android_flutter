@@ -1,17 +1,78 @@
 import 'package:flutter/material.dart';
-import 'package:fluro/fluro.dart';
-
+import 'package:wan_android_flutter/pages/detail/article_detail_page.dart';
 import 'package:wan_android_flutter/pages/home/home_page.dart';
 import 'package:wan_android_flutter/pages/cate/cate_page.dart';
+import 'package:wan_android_flutter/pages/login_register/login_page.dart';
+import 'package:wan_android_flutter/pages/login_register/register_page.dart';
 import 'package:wan_android_flutter/pages/public_plat/public_plat_page.dart';
 import 'package:wan_android_flutter/pages/project/project_page.dart';
+import 'package:wan_android_flutter/pages/root_page.dart';
+import 'package:wan_android_flutter/pages/settings/about_us_page.dart';
+import 'package:wan_android_flutter/pages/settings/privacy_policy_page.dart';
 import 'package:wan_android_flutter/pages/user/user_page.dart';
 import 'package:wan_android_flutter/pages/user/user_collect_page.dart';
 import 'package:wan_android_flutter/pages/user/user_integral_page.dart';
 import 'package:wan_android_flutter/pages/user/user_share_page.dart';
 import 'package:wan_android_flutter/pages/settings/settings_page.dart';
 
+registerRouters() {
+  AppRouter.register(AppPage.root, (context, paramters) {
+    return RootPage();
+  });
+
+  AppRouter.register(AppPage.home, (context, paramters) {
+    return HomePage();
+  });
+  AppRouter.register(AppPage.cate, (context, paramters) {
+    return CatePage();
+  });
+  AppRouter.register(AppPage.publicPlat, (context, paramters) {
+    return PublicPlatPage();
+  });
+  AppRouter.register(AppPage.project, (context, paramters) {
+    return ProjectPage();
+  });
+  AppRouter.register(AppPage.user, (context, paramters) {
+    return UserPage();
+  });
+  AppRouter.register(AppPage.userCollect, (context, paramters) {
+    return UserCollectPage();
+  });
+  AppRouter.register(AppPage.userIntegral, (context, paramters) {
+    return UserIntegralPage();
+  });
+  AppRouter.register(AppPage.userShare, (context, paramters) {
+    return UserSharePage();
+  });
+  AppRouter.register(AppPage.settings, (context, paramters) {
+    return SettingsPage();
+  });
+  AppRouter.register(AppPage.login, (context, paramters) {
+    return LoginPage();
+  });
+  AppRouter.register(AppPage.register, (context, paramters) {
+    return RegisterPage();
+  });
+  AppRouter.register(AppPage.articleDetail, (context, paramters) {
+    String url = paramters["url"];
+    String title = paramters["title"];
+    String id = paramters["id"];
+    return ArticleDetailPage(
+      url: url,
+      title: title,
+      id: id,
+    );
+  });
+  AppRouter.register(AppPage.aboutUs, (context, paramters) {
+    return AboutUsPage();
+  });
+  AppRouter.register(AppPage.privacyPolicy, (context, paramters) {
+    return PrivacyPolicyPage();
+  });
+}
+
 class AppPage {
+  static const root = "/";
   static const home = "/home";
   static const cate = "/cate";
   static const publicPlat = "/plat";
@@ -21,79 +82,49 @@ class AppPage {
   static const userIntegral = "/user/integral";
   static const userShare = "/user/share";
   static const settings = "/settings";
+  static const login = "/user/login";
+  static const register = "/user/register";
+  static const articleDetail = "/article/detail";
+  static const aboutUs = "/settings/about-us";
+  static const privacyPolicy = "/settings/privacy-policy";
 }
 
-class AppRouter {
-  static Router _router = Router();
+typedef AppRouterHandler = Widget Function(BuildContext, Map<String, dynamic>);
 
-  static void register() {
-    _router.define(AppPage.home, handler: _homeHandler);
-    _router.define(AppPage.cate, handler: _cateHandler);
-    _router.define(AppPage.publicPlat, handler: _platHandler);
-    _router.define(AppPage.project, handler: _projectHandler);
-    _router.define(AppPage.user, handler: _userHandler);
-    _router.define(AppPage.userCollect, handler: _userCollectHandler);
-    _router.define(AppPage.userIntegral, handler: _userIntegralHandler);
-    _router.define(AppPage.userShare, handler: _userShareHandler);
-    _router.define(AppPage.settings, handler: _settingsHandler);
+class AppRouter {
+  static Map<String, AppRouterHandler> _pathToPageBuilder = {};
+
+  static void register(String path, AppRouterHandler handler) {
+    _pathToPageBuilder[path] = handler;
   }
 
-  static navigateTo(
+  static void navigateTo(
     BuildContext context,
     String path, {
     Map<String, dynamic> parameters,
-    bool replace = false,
+    bool fullscreenDialog = false,
   }) {
-    String finalPath = path;
-    if (parameters != null && parameters.isNotEmpty) {
-      List<String> paraStringList = [];
-      parameters.forEach((key, value) {
-        paraStringList.add("$key=$value");
-      });
-      String paraString = paraStringList.join("&");
-      finalPath = "$path?${Uri.encodeFull(paraString)}";
+    Widget _buildPage(BuildContext context) {
+      AppRouterHandler handler = _pathToPageBuilder[path];
+      assert(handler != null, "the ");
+      return handler(context, parameters);
     }
-    _router.navigateTo(
-      context,
-      finalPath,
-      replace: replace,
-      transition: TransitionType.material,
-    );
+
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: _buildPage,
+      fullscreenDialog: fullscreenDialog,
+    ));
+  }
+
+  static pop(BuildContext context, {String toPath}) {
+    if (toPath != null && toPath.isNotEmpty) {
+      Navigator.popUntil(context, ModalRoute.withName(toPath));
+      return;
+    }
+    Navigator.pop(context);
+  }
+
+  static popToRoot(BuildContext context) {
+    pop(context, toPath: AppPage.root);
   }
 }
-
-var _homeHandler = Handler(handlerFunc: (ctx, map) {
-  return HomePage();
-});
-
-var _cateHandler = Handler(handlerFunc: (ctx, map) {
-  return CatePage();
-});
-
-var _platHandler = Handler(handlerFunc: (ctx, map) {
-  return PublicPlatPage();
-});
-
-var _projectHandler = Handler(handlerFunc: (ctx, map) {
-  return ProjectPage();
-});
-
-var _userHandler = Handler(handlerFunc: (ctx, map) {
-  return UserPage();
-});
-
-var _userCollectHandler = Handler(handlerFunc: (ctx, map) {
-  return UserCollectPage();
-});
-
-var _userIntegralHandler = Handler(handlerFunc: (ctx, map) {
-  return UserIntegralPage();
-});
-
-var _userShareHandler = Handler(handlerFunc: (ctx, map) {
-  return UserSharePage();
-});
-
-var _settingsHandler = Handler(handlerFunc: (ctx, map) {
-  return SettingsPage();
-});

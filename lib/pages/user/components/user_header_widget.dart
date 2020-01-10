@@ -8,14 +8,17 @@ class UserHeaderWidget extends StatelessWidget {
     this.nickName,
     this.id,
     this.ranking,
-    this.grade,
+    this.coin,
+    this.nickNameOnTap,
   }) : super(key: key);
 
   final String headImgUrl;
   final String nickName;
   final String id;
   final String ranking;
-  final String grade;
+  final String coin;
+
+  final VoidCallback nickNameOnTap;
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +43,12 @@ class UserHeaderWidget extends StatelessWidget {
               ),
             ),
             Padding(padding: EdgeInsets.only(bottom: 12)),
-            Text(
-              nickName,
-              style: themeData.textTheme.title.copyWith(fontSize: 22),
+            InkWell(
+              onTap: nickNameOnTap,
+              child: Text(
+                nickName,
+                style: themeData.textTheme.title.copyWith(fontSize: 22),
+              ),
             ),
             DefaultTextStyle(
               style: themeData.textTheme.subtitle,
@@ -52,7 +58,7 @@ class UserHeaderWidget extends StatelessWidget {
                 children: <Widget>[
                   Text("ID: $id"),
                   Padding(padding: EdgeInsets.only(right: 10)),
-                  Text("等级: $grade"),
+                  Text("等级: $coin"),
                   Padding(padding: EdgeInsets.only(right: 10)),
                   Text("排名: $ranking"),
                 ],

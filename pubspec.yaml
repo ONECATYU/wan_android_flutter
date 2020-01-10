@@ -35,6 +35,10 @@ dependencies:
   cached_network_image: ^2.0.0-rc
   shared_preferences: ^0.5.6
   webview_flutter: ^0.3.19+2
+  bot_toast: ^2.2.1
+  cookie_jar: ^1.0.0
+  dio_cookie_manager: ^1.0.0
+  flutter_markdown: ^0.3.2
 
 dev_dependencies:
   json_serializable: ^3.2.5

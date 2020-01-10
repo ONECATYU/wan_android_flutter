@@ -1,12 +1,14 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:wan_android_flutter/pages/root_page.dart';
 import 'package:provider/provider.dart';
 
 import 'package:wan_android_flutter/provider/theme.dart';
 import 'package:wan_android_flutter/router/router.dart';
+import 'package:wan_android_flutter/provider/user_provider.dart';
 
 void main() {
-  AppRouter.register();
+  registerRouters();
   runApp(MyApp());
 }
 
@@ -18,12 +20,16 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ThemeManager>.value(
           value: ThemeManager(appTheme: AppLightTheme()),
         ),
+        ChangeNotifierProvider<UserProvider>.value(value: UserProvider()),
       ],
       child: Consumer<ThemeManager>(builder: (context, themeManager, _) {
-        return MaterialApp(
-          title: 'Flutter Demo',
-          theme: themeManager.themeData,
-          home: RootPage(),
+        return BotToastInit(
+          child: MaterialApp(
+            title: 'Flutter Demo',
+            theme: themeManager.themeData,
+            navigatorObservers: [BotToastNavigatorObserver()],
+            home: RootPage(),
+          ),
         );
       }),
     );

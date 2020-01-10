@@ -4,6 +4,7 @@ import 'package:wan_android_flutter/components/tab_bar_scaffold.dart';
 import 'package:wan_android_flutter/models/article.dart';
 import 'package:wan_android_flutter/models/cate.dart';
 import 'package:wan_android_flutter/network/base.dart';
+import 'package:wan_android_flutter/router/router.dart';
 
 abstract class TabBarScaffoldState<T extends StatefulWidget> extends State<T>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
@@ -57,6 +58,18 @@ abstract class TabBarScaffoldState<T extends StatefulWidget> extends State<T>
     });
   }
 
+  navigateToDetail(ArticleModel model) {
+    AppRouter.navigateTo(
+      context,
+      AppPage.articleDetail,
+      parameters: {
+        "url": model.link,
+        "title": model.title,
+        "id": model.id.toString(),
+      },
+    );
+  }
+
   @override
   bool get wantKeepAlive => true;
 
@@ -90,7 +103,10 @@ abstract class TabBarScaffoldState<T extends StatefulWidget> extends State<T>
       itemCount: currentArticleList.length,
       itemBuilder: (context, index) {
         ArticleModel model = currentArticleList[index];
-        return ArticleCard.fromArticleListModel(model);
+        return ArticleCard.fromArticleListModel(
+          model,
+          onTap: () => navigateToDetail(model),
+        );
       },
     );
   }

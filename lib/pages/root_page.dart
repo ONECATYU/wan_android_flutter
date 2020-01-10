@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:wan_android_flutter/provider/theme.dart';
 import '../components/bottom_tab_bar.dart';
 
 import 'package:wan_android_flutter/pages/home/home_page.dart';

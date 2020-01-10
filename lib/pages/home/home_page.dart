@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wan_android_flutter/components/simple_app_bar.dart';
 import 'package:wan_android_flutter/components/search_bar.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:wan_android_flutter/network/base.dart';
@@ -9,6 +8,7 @@ import 'package:wan_android_flutter/components/article_card.dart';
 import 'package:wan_android_flutter/models/banner.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:wan_android_flutter/router/router.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -79,6 +79,18 @@ class _HomePageState extends State<HomePage>
     if (model.collect || model.id == null) return;
   }
 
+  navigateToDetail(ArticleModel model) {
+    AppRouter.navigateTo(
+      context,
+      AppPage.articleDetail,
+      parameters: {
+        "url": model.link,
+        "title": model.title,
+        "id": model.id.toString(),
+      },
+    );
+  }
+
   @override
   bool get wantKeepAlive => true;
 
@@ -126,6 +138,7 @@ class _HomePageState extends State<HomePage>
         children.add(ArticleCard.fromArticleListModel(
           model,
           collectClick: () => collectHandler(model),
+          onTap: () => navigateToDetail(model),
         ));
         children.add(Padding(padding: EdgeInsets.only(bottom: 12)));
       });
