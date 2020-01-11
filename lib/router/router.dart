@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wan_android_flutter/models/cate.dart';
+import 'package:wan_android_flutter/pages/cate/cate_article_list_page.dart';
 import 'package:wan_android_flutter/pages/detail/article_detail_page.dart';
 import 'package:wan_android_flutter/pages/home/home_page.dart';
 import 'package:wan_android_flutter/pages/cate/cate_page.dart';
@@ -69,6 +71,17 @@ registerRouters() {
   AppRouter.register(AppPage.privacyPolicy, (context, paramters) {
     return PrivacyPolicyPage();
   });
+
+  AppRouter.register(AppPage.cateArticleList, (context, paramters) {
+    String title = paramters["title"];
+    int initialIndex = paramters["initialIndex"];
+    List<CateModel> cateModels = paramters["cateModels"];
+    return CateArticleListPage(
+      title: title,
+      initialIndex: initialIndex,
+      cateModels: cateModels,
+    );
+  });
 }
 
 class AppPage {
@@ -87,6 +100,7 @@ class AppPage {
   static const articleDetail = "/article/detail";
   static const aboutUs = "/settings/about-us";
   static const privacyPolicy = "/settings/privacy-policy";
+  static const cateArticleList = "/cate/article/list";
 }
 
 typedef AppRouterHandler = Widget Function(BuildContext, Map<String, dynamic>);

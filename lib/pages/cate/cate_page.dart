@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:wan_android_flutter/components/simple_app_bar.dart';
+import 'package:wan_android_flutter/models/article.dart';
 import 'package:wan_android_flutter/models/cate.dart';
 import 'package:wan_android_flutter/models/navigate.dart';
 import 'package:wan_android_flutter/network/base.dart';
 import 'package:wan_android_flutter/pages/cate/components/cate_card.dart';
 import 'package:wan_android_flutter/network/cate.dart';
 import 'package:wan_android_flutter/pages/cate/components/cate_content_page.dart';
+import 'package:wan_android_flutter/router/router.dart';
 
 class CatePage extends StatefulWidget {
   @override
@@ -42,6 +44,30 @@ class _CatePageState extends State<CatePage>
     }
   }
 
+  navigateToTreeArticleList(CateModel model, int index) {
+    AppRouter.navigateTo(
+      context,
+      AppPage.cateArticleList,
+      parameters: {
+        "title": model.name,
+        "initialIndex": index,
+        "cateModels": model.children,
+      },
+    );
+  }
+
+ void navigateToArticleDetail(ArticleModel model) {
+   AppRouter.navigateTo(
+      context,
+      AppPage.articleDetail,
+      parameters: {
+        "title": model.title,
+        "url": model.link,
+        "id": model.id.toString(),
+      },
+    );
+ }
+
   @override
   bool get wantKeepAlive => true;
 
@@ -65,19 +91,17 @@ class _CatePageState extends State<CatePage>
 
     ThemeData themeData = Theme.of(context);
     return Scaffold(
-      appBar: SimpleAppBar(
-        backgroundColor: themeData.backgroundColor,
-        child: Center(
-          child: SizedBox(
-            width: 160,
-            child: TabBar(
-              controller: _tabController,
-              indicatorColor: themeData.primaryColor,
-              tabs: <Widget>[
-                Tab(child: Text("体系", style: themeData.textTheme.title)),
-                Tab(child: Text("导航", style: themeData.textTheme.title)),
-              ],
-            ),
+      appBar: AppBar(
+        centerTitle: true,
+        title: SizedBox(
+          width: 160,
+          child: TabBar(
+            controller: _tabController,
+            indicatorColor: themeData.primaryColor,
+            tabs: <Widget>[
+              Tab(child: Text("体系", style: themeData.textTheme.title)),
+              Tab(child: Text("导航", style: themeData.textTheme.title)),
+            ],
           ),
         ),
       ),
@@ -91,6 +115,7 @@ class _CatePageState extends State<CatePage>
               return CateCard(
                 title: model.name,
                 labels: model.children.map((subCate) => subCate.name).toList(),
+                labelsOnTap: (index) => navigateToTreeArticleList(model, index),
               );
             },
           ),
@@ -101,6 +126,7 @@ class _CatePageState extends State<CatePage>
               return CateCard(
                 title: model.name,
                 labels: model.articles.map((article) => article.title).toList(),
+                labelsOnTap: (index) => navigateToArticleDetail(model.articles[index]),
               );
             },
           ),

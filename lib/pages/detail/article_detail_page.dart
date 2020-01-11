@@ -29,6 +29,12 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
   }
 
   @override
+  void dispose() {
+    if (_hideLoading != null) _hideLoading(); 
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Widget titleWidget;
     if (widget.title != null) {
@@ -53,7 +59,7 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
         initialUrl: widget.url,
         javascriptMode: JavascriptMode.unrestricted,
         onPageStarted: (url) {
-          _hideLoading = BotToast.showLoading();
+          _hideLoading = BotToast.showLoading(allowClick: true);
         },
         onPageFinished: (url) => _hideLoading(),
       ),

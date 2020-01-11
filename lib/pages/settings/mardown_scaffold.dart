@@ -15,7 +15,7 @@ class MarkdownScaffold extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("隐私政策", style: Theme.of(context).textTheme.title),
+        title: Text(title, style: Theme.of(context).textTheme.title),
       ),
       body: Container(
         color: Theme.of(context).backgroundColor,

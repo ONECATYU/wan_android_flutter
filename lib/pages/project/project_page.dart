@@ -18,8 +18,8 @@ class _ProjectPageState extends TabBarScaffoldState<ProjectPage> {
   }
 
   @override
-  Future<Result> requestArticleList(String id) {
-    return getArticleList(id);
+  Future<Result> requestArticleList(String id, {int page}) {
+    return getArticleList(id, page: page);
   }
 }
 

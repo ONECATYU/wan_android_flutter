@@ -19,7 +19,7 @@ Future<Result> getProjectCateList() async {
   return result;
 }
 
-Future<Result> getArticleList(String cid, {int page = 1}) async {
+Future<Result> getArticleList(String cid, {int page = 0}) async {
   Result result = await Client.request(ProjectReqPath.articleList(cid, page));
   if (!result.success) return result;
 

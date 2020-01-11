@@ -17,8 +17,10 @@ class _PublicPlatPageState extends TabBarScaffoldState<PublicPlatPage> {
   }
 
   @override
-  Future<Result> requestArticleList(String id) {
-    return getArticleList(id);
+  Future<Result> requestArticleList(String id, {int page}) {
+    // 这里++是因为这个page是从1开始的,而TabBarScaffoldState是从0开始的
+    page ++;
+    return getArticleList(id, page: page);
   }
 }
 
