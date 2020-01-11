@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wan_android_flutter/components/simple_app_bar.dart';
 import 'package:wan_android_flutter/models/article.dart';
 import 'package:wan_android_flutter/models/cate.dart';
 import 'package:wan_android_flutter/models/navigate.dart';
