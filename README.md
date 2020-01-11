@@ -1,16 +1,13 @@
 # wan_android_flutter
 
-A new Flutter application.
+flutter实战项目  
 
-## Getting Started
+### 截图   
 
-This project is a starting point for a Flutter application.
+<img src="https://github.com/ONECATYU/wan_android_flutter/blob/master/screenshot/home.png" width="150">  <img src="https://github.com/ONECATYU/wan_android_flutter/blob/master/screenshot/tree.png" width="150">  <img src="https://github.com/ONECATYU/wan_android_flutter/blob/master/screenshot/public_plat.png" width="150">  <img src="https://github.com/ONECATYU/wan_android_flutter/blob/master/screenshot/project.png" width="150">  <img src="https://github.com/ONECATYU/wan_android_flutter/blob/master/screenshot/mine.png" width="150">  
 
-A few resources to get you started if this is your first Flutter project:
+### 已完成部分  
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- 登录注册模块
+- 首页/体系/公众号/项目/我的/文章详情/关于我们/隐私政策
+- theme切换
